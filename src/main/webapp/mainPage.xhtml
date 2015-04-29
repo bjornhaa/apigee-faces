@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+    <title>Great success</title>
+</h:head>
+<h:body>
+    <h:outputStylesheet name="style.css" library="css"/>
+    <div id="container">
+        <h1>Hurra, logget inn !</h1>
+        <br/>
+        Ny <a href="/login">login</a>
+        <p/>
+        <hr/>
+        <h3>Hent salgstips</h3>
+        <h:form id="mainForm">
+            <h:panelGrid>
+                <h:commandButton value="ikverksett" action="#{controller.salesTips}"/>
+            </h:panelGrid>
+        </h:form>
+        <hr/>
+        <p/>
+        <h3>Kjørr validator</h3>
+        <h:form id="validator">
+            <table>
+                <tr>
+                    <td><h:outputLabel for="subscriptionTypeId" value="Ny subscriptionId"/></td>
+                    <td><h:inputText id="subscriptionTypeId" value="#{controller.changeId}" required="false"/></td>
+                </tr>
+                <tr>
+                    <td><h:outputLabel for="subscriptionTypeId" value="Addon products (comma sep list)"/></td>
+                    <td><h:inputText id="addon" value="#{controller.addonProducts}" required="false"/></td>
+                </tr>
+                <tr>
+                    <td><h:outputLabel for="msisdn" value="msisdn"/></td>
+                    <td><h:inputText id="msisdn" value="#{controller.msisdn}" required="true"/></td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="right"><h:commandButton value="ikverksett" action="#{controller.validator}"/></td>
+                </tr>
+            </table>
+        </h:form>
+        <hr/>
+        <p/>
+        <h3>Kjørr alternatives</h3>
+        <h:form id="alternatives">
+            <table>
+                <tr>
+                    <td><h:outputLabel for="msisdn2" value="msisdn"/></td>
+                    <td><h:inputText id="msisdn2" value="#{controller.msisdn}" required="true"/></td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="right"><h:commandButton value="ikverksett" action="#{controller.alternatives}"/></td>
+                </tr>
+            </table>
+        </h:form>
+        <p/>
+        <hr/>
+        <h3>Kjørr trackingResponse</h3>
+        <h:form id="tracking">
+            <table>
+                <tr>
+                    <td><h:outputLabel for="action" value="action (PRESENTED|ORDERED|CLICKED)"/></td>
+                    <td><h:inputText id="action" value="#{controller.action}" required="true"/></td>
+                </tr>
+                <tr>
+                    <td><h:outputLabel for="idAtt" value="id"/></td>
+                    <td><h:inputText id="idAtt" value="#{controller.id}" required="true"/></td>
+                </tr>
+                <tr>
+                    <td><h:outputLabel for="page" value="page"/></td>
+                    <td><h:inputText id="page" value="#{controller.page}" required="true"/></td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="right"><h:commandButton value="ikverksett" action="#{controller.tracking}"/></td>
+                </tr>
+            </table>
+        </h:form>
+        <hr/>
+        <h3>Kjørr product offers</h3>
+        <h:form id="offers">
+            <table>
+                <tr>
+                    <td><h:outputLabel for="msisdn3" value="msisdn"/></td>
+                    <td><h:inputText id="msisdn3" value="#{controller.msisdn}" required="true"/></td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="right"><h:commandButton value="ikverksett" action="#{controller.offers}"/></td>
+                </tr>
+            </table>
+        </h:form>
+
+        <h:messages showDetail="true" showSummary="false"/>
+    </div>
+</h:body>
+</html>
