@@ -26,9 +26,6 @@ import java.util.Map;
 
 public class ApiGeeClient {
 
-    public final String clientId = "F5zZoOvDLINAe8GmaQdQubd82F2k7kta";
-    public final String clientSecret = "zJpDtrqk7is9OwjDNWi5CzOK";
-
 
     // makes a GET request to url and returns body as a string
     public String get(String url, Map<String,String> params, Map<String,String> headerParams) throws ClientProtocolException, IOException {
@@ -50,7 +47,7 @@ public class ApiGeeClient {
     }
 
     // makes a POST request to url with form parameters and returns body as a string
-    public String postAuthentication(String url, Map<String, String> formParameters) throws IOException {
+    public String postAuthentication(String url, Map<String, String> formParameters, String clientId, String clientSecret) throws IOException {
         HttpPost request = new HttpPost(url);
 
         List<NameValuePair> nvps = new ArrayList<NameValuePair>();
@@ -61,7 +58,9 @@ public class ApiGeeClient {
 
         request.setEntity(new UrlEncodedFormEntity(nvps));
 
-        String userpass = "F5zZoOvDLINAe8GmaQdQubd82F2k7kta:2MGiU9a5wQcyPPH6";
+
+        String userpass = clientId+":"+clientSecret;
+        //String userpass = "F5zZoOvDLINAe8GmaQdQubd82F2k7kta:2MGiU9a5wQcyPPH6";
         String basicAuth = "Basic " + DatatypeConverter.printBase64Binary(userpass.getBytes());
         request.setHeader("Authorization", basicAuth);
 

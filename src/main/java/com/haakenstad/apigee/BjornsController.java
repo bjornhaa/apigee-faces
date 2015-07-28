@@ -22,6 +22,9 @@ import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
 import com.haakenstad.apigee.model.*;
 import com.haakenstad.apigee.servlet.ApiGeeClient;
+import com.haakenstad.apigee.servlet.Constants;
+import com.haakenstad.apigee.servlet.ENV;
+import com.haakenstad.apigee.servlet.PropKeys;
 import org.apache.commons.lang3.StringUtils;
 import org.json.simple.parser.ParseException;
 import org.primefaces.model.DefaultTreeNode;
@@ -41,7 +44,7 @@ import java.util.Map;
 public class BjornsController {
 
 
-    private static final String APIGEE_BASE_URL = "https://test-apigw.telenor.no";
+    private static final String PROTOCOL = "https://";
     private String msisdn;
     private String changeId;
     private TreeNode tipsTree;
@@ -72,11 +75,14 @@ public class BjornsController {
         Map<String, String> params = ImmutableMap.<String, String>builder()
                 .put("brand", "TELENOR")
                 .put("timeout", "30000")
-                .put("Language", "NO")
+                //.put("Language", "EN") ignored
                 .build();
         ApiGeeClient apiGeeClient = new ApiGeeClient();
         try {
-            String json = apiGeeClient.get(APIGEE_BASE_URL + "/salestips/v1/", params, headerParams);
+            ENV env = (ENV) sessionMap.get("env");
+            String baseUrl = Constants.getProperty(env, PropKeys.APIGEE_BASE_URL);
+
+            String json = apiGeeClient.get(PROTOCOL+baseUrl + "/salestips/v1/", params, headerParams);
             System.out.println("json fra MS: "+json);
             SalesTipResponse salesTipResponse = new Gson().fromJson(json, SalesTipResponse.class);
             setJson(json);
@@ -157,7 +163,10 @@ public class BjornsController {
                 .build();
         ApiGeeClient apiGeeClient = new ApiGeeClient();
         try {
-            String url = APIGEE_BASE_URL + "/mobile-subscription/v1/tel:47" + getMsisdn() + "/alternatives/validator?";
+            ENV env = (ENV) sessionMap.get("env");
+            String baseUrl = Constants.getProperty(env, PropKeys.APIGEE_BASE_URL);
+
+            String url = PROTOCOL+baseUrl + "/mobile-subscription/v1/tel:47" + getMsisdn() + "/alternatives/validator?";
             String sep = "";
             if (!StringUtils.isEmpty(getChangeId())) {
                 url += "changeId=" + getChangeId();
@@ -186,7 +195,9 @@ public class BjornsController {
                 .build();
         ApiGeeClient apiGeeClient = new ApiGeeClient();
         try {
-            String url = APIGEE_BASE_URL + "/mobile-subscription/v1/tel:47" + getMsisdn() + "/alternatives";
+            ENV env = (ENV) sessionMap.get("env");
+            String baseUrl = Constants.getProperty(env, PropKeys.APIGEE_BASE_URL);
+            String url = PROTOCOL+baseUrl + "/mobile-subscription/v1/tel:47" + getMsisdn() + "/alternatives";
             String json = apiGeeClient.get(url,new HashMap<String, String>(), headerParams);
             setJson(json);
         } catch (IOException e) {
@@ -208,7 +219,84 @@ public class BjornsController {
                 .build();
         ApiGeeClient apiGeeClient = new ApiGeeClient();
         try {
-            String url = APIGEE_BASE_URL + "/mobile-product/v2/tel:47" + getMsisdn() + "/offers";
+            ENV env = (ENV) sessionMap.get("env");
+            String baseUrl = Constants.getProperty(env, PropKeys.APIGEE_BASE_URL);
+            String url = PROTOCOL+baseUrl + "/mobile-product/v2/tel:47" + getMsisdn() + "/offers";
+            String json = apiGeeClient.get(url,new HashMap<String, String>(), headerParams);
+            setJson(json);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("4");
+
+        return "json_raw.xhtml";
+    }
+
+    public String inventory() {
+
+        Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+        Object accessToken = sessionMap.get("access_token");
+        // get some info about the user with the access token
+        Map<String, String> headerParams = ImmutableMap.<String, String>builder()
+                .put("Authorization", "Bearer " + accessToken)
+                .put("Accept", "*")
+                .build();
+        ApiGeeClient apiGeeClient = new ApiGeeClient();
+        try {
+            ENV env = (ENV) sessionMap.get("env");
+            String baseUrl = Constants.getProperty(env, PropKeys.APIGEE_BASE_URL);
+
+            String url = PROTOCOL+baseUrl + "/mobile-product/v2/tel:47" + getMsisdn() + "/inventory";
+            String json = apiGeeClient.get(url,new HashMap<String, String>(), headerParams);
+            setJson(json);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("4");
+
+        return "json_raw.xhtml";
+    }
+
+    public String included() {
+
+        Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+        Object accessToken = sessionMap.get("access_token");
+        // get some info about the user with the access token
+        Map<String, String> headerParams = ImmutableMap.<String, String>builder()
+                .put("Authorization", "Bearer " + accessToken)
+                .put("Accept", "*")
+                .build();
+        ApiGeeClient apiGeeClient = new ApiGeeClient();
+        try {
+            ENV env = (ENV) sessionMap.get("env");
+            String baseUrl = Constants.getProperty(env, PropKeys.APIGEE_BASE_URL);
+
+            String url = PROTOCOL+baseUrl + "/mobile-subscription/v1/tel:47" + getMsisdn() + "/included";
+            String json = apiGeeClient.get(url,new HashMap<String, String>(), headerParams);
+            setJson(json);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("4");
+
+        return "json_raw.xhtml";
+    }
+
+    public String counters() {
+
+        Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+        Object accessToken = sessionMap.get("access_token");
+        // get some info about the user with the access token
+        Map<String, String> headerParams = ImmutableMap.<String, String>builder()
+                .put("Authorization", "Bearer " + accessToken)
+                .put("Accept", "*")
+                .build();
+        ApiGeeClient apiGeeClient = new ApiGeeClient();
+        try {
+            ENV env = (ENV) sessionMap.get("env");
+            String baseUrl = Constants.getProperty(env, PropKeys.APIGEE_BASE_URL);
+
+            String url = PROTOCOL+baseUrl + "/mobile-usage/v2/tel:47" + getMsisdn() + "/counters";
             String json = apiGeeClient.get(url,new HashMap<String, String>(), headerParams);
             setJson(json);
         } catch (IOException e) {
@@ -238,7 +326,10 @@ public class BjornsController {
             url += getId().replace(";","_");
             url += "/"+getAction();
             url += "?pageName="+getPage();
-            String json = apiGeeClient.post(APIGEE_BASE_URL + url, params, headerParams);
+
+            ENV env = (ENV) sessionMap.get("env");
+            String baseUrl = Constants.getProperty(env, PropKeys.APIGEE_BASE_URL);
+            String json = apiGeeClient.post(PROTOCOL+baseUrl + url, params, headerParams);
             System.out.println("json fra MS: "+json);
             SalesTipResponse salesTipResponse = new Gson().fromJson(json, SalesTipResponse.class);
             setJson(json);

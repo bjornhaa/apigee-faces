@@ -33,14 +33,18 @@ public class CallbackServlet extends HttpServlet {
 
         String code = req.getParameter("code");
         //String code = "UFkXH0UI";
-        //System.out.println("Callback med code: " + code);
+        System.out.println("Callback med code: " + code);
         if (code != null) {
 
             // get the access token by post to Google
             ImmutableMap<String, String> formParameters = ImmutableMap.<String, String>builder()
                     .put("code", code)
                     .put("grant_type", "authorization_code").build();
-            String body = apiGeeClient.postAuthentication("https://test-apigw.telenor.no/oauth/v2/token", formParameters);
+            ENV env = (ENV) req.getSession().getAttribute("env");
+            String tokenurl = Constants.getProperty(env,PropKeys.APIGEE_TOKEN_URL);
+            String clientId = Constants.getProperty(env, PropKeys.CLIENT_ID);
+            String clientSecret = Constants.getProperty(env, PropKeys.CLIENT_SECRET);
+            String body = apiGeeClient.postAuthentication(tokenurl, formParameters, clientId,clientSecret);
 
             JSONObject jsonObject;
 

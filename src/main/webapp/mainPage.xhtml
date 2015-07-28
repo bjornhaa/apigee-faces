@@ -28,9 +28,9 @@
 <h:body>
     <h:outputStylesheet name="style.css" library="css"/>
     <div id="container">
-        <h1>Hurra, logget inn !</h1>
+        <h1>Hurra, logget inn mot #{env}!</h1>
         <br/>
-        Ny <a href="/login">login</a>
+        Ny <a href="/login?env=#{env}">login</a>
         <p/>
         <hr/>
         <h3>Hent salgstips</h3>
@@ -41,7 +41,7 @@
         </h:form>
         <hr/>
         <p/>
-        <h3>Kjørr validator</h3>
+        <h3>Kjørr mobile-subscription/alternatives/validator</h3>
         <h:form id="validator">
             <table>
                 <tr>
@@ -63,7 +63,7 @@
         </h:form>
         <hr/>
         <p/>
-        <h3>Kjørr alternatives</h3>
+        <h3>Kjørr mobile-subscription/alternatives</h3>
         <h:form id="alternatives">
             <table>
                 <tr>
@@ -76,6 +76,58 @@
             </table>
         </h:form>
         <p/>
+        <hr/>
+        <h3>Kjørr mobile-product/offers</h3>
+        <h:form id="offers">
+            <table>
+                <tr>
+                    <td><h:outputLabel for="msisdn3" value="msisdn"/></td>
+                    <td><h:inputText id="msisdn3" value="#{controller.msisdn}" required="true"/></td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="right"><h:commandButton value="ikverksett" action="#{controller.offers}"/></td>
+                </tr>
+            </table>
+        </h:form>
+        <hr/>
+        <h3>Kjørr mobile-product/inventory</h3>
+        <h:form id="inventory">
+            <table>
+                <tr>
+                    <td><h:outputLabel for="msisdn4" value="msisdn"/></td>
+                    <td><h:inputText id="msisdn4" value="#{controller.msisdn}" required="true"/></td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="right"><h:commandButton value="ikverksett" action="#{controller.inventory}"/></td>
+                </tr>
+            </table>
+        </h:form>
+        <hr/>
+        <h3>Kjørr mobile-subscription/included</h3>
+        <h:form id="included">
+            <table>
+                <tr>
+                    <td><h:outputLabel for="msisdn5" value="msisdn"/></td>
+                    <td><h:inputText id="msisdn5" value="#{controller.msisdn}" required="true"/></td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="right"><h:commandButton value="ikverksett" action="#{controller.included}"/></td>
+                </tr>
+            </table>
+        </h:form>
+        <hr/>
+        <h3>Kjørr /mobile-usage/v2/counters</h3>
+        <h:form id="counters">
+            <table>
+                <tr>
+                    <td><h:outputLabel for="msisdn6" value="msisdn"/></td>
+                    <td><h:inputText id="msisdn6" value="#{controller.msisdn}" required="true"/></td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="right"><h:commandButton value="ikverksett" action="#{controller.counters}"/></td>
+                </tr>
+            </table>
+        </h:form>
         <hr/>
         <h3>Kjørr trackingResponse</h3>
         <h:form id="tracking">
@@ -98,18 +150,6 @@
             </table>
         </h:form>
         <hr/>
-        <h3>Kjørr product offers</h3>
-        <h:form id="offers">
-            <table>
-                <tr>
-                    <td><h:outputLabel for="msisdn3" value="msisdn"/></td>
-                    <td><h:inputText id="msisdn3" value="#{controller.msisdn}" required="true"/></td>
-                </tr>
-                <tr>
-                    <td colspan="2" align="right"><h:commandButton value="ikverksett" action="#{controller.offers}"/></td>
-                </tr>
-            </table>
-        </h:form>
 
         <h:messages showDetail="true" showSummary="false"/>
     </div>
